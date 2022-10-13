@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>CRUD API Help Page</title>
+    <style> 
+        h1{
+            font-size: 40px;
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: 300;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        table{
+            width:100%;
+            table-layout: fixed;
+        }
+        .table-content{
+            height:300px;
+            overflow-x:auto;
+            margin-top: 0px;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        th{
+            padding: 20px 15px;
+            text-align: left;
+            font-weight: 500;
+            font-size: 16px;
+            color: #fff;
+            text-transform: uppercase;
+        }
+        td{
+            padding: 15px;
+            text-align: left;
+            vertical-align:middle;
+            font-weight: 300;
+            font-size: 16px;
+            color: #fff;
+            border-bottom: solid 1px rgba(255, 255, 255, 0.445);
+        }
+
+
+
+
+        @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
+        body{
+        background: -webkit-linear-gradient(left, #25c481, #25b7c4);
+        background: linear-gradient(to right, #25c481, #25b7c4);
+        font-family: 'Roboto', sans-serif;
+        }
+        section{
+        margin: 50px;
+        }
+    </style>
+</head>
+<body>
+    <h1>API Supported Methods</h1>
+    <br>
+    <div>
+        <table>
+            <tr>
+                <th>Method</th>
+                <th>Route</th>
+                <th>Functionality</th>
+            </tr>
+            <tr>
+                <td>[GET]</td>
+                <td>/</td>
+                <td>Any Get Request made to the root path of the server will return a 
+                    HELP Page written in HTML and CSS which will outline the functionality 
+                    of the API. 
+                    It will list each method that is supported and provide an example of 
+                    the input and output expected as well as any error paths or error 
+                    handling that is available.</td>
+            </tr>
+            <tr>
+                <td>[POST]</td>
+                <td>/Users</td>
+                <td>When a POST request is made to /Users it will expect a user object as 
+                    shown below:
+                    <br>
+                    {<br>
+                        &emsp;"userId": "string",<br>
+                        &emsp;"firstName": "string",<br>
+                        &emsp;"lastName": "string",<br>
+                        &emsp;"emailAddress": "string",<br>
+                        &emsp;"password": "string"<br>
+                    }
+                    <br><br>
+                    It should take this data and create a new User record and store it in an 
+                    in-memory array. 
+                    
+                    All the fields are required and there should be error checking in place for 
+                    this. If fields are missing this should return a 406 Unacceptable status along with a message.
+
+                    No two users can share the same user ID. If the same user ID is 
+                    attempted to be created it should respond with 409 Conflict status and a 
+                    message. 
+                    <br>
+                    {<br>
+                        &emsp;"message": "string",<br>
+                        &emsp;"status": "string"<br>
+                    }<br><br>
+                    
+                    If everything is successful it should respond with status 201 (Created) 
+                    and a copy of the object (without the password)</td>
+            </tr>
+            <tr>
+                <td>[GET]</td>
+                <td>/Users</td>
+                <td>Should return a list (JSON ARRAY) of all the Users which have been 
+                    created with a 200 response or just a blank array.
+                    <br>
+                    {<br>
+                        &emsp;"userId": "string",<br>
+                        &emsp;"firstName": "string",<br>
+                        &emsp;"lastName": "string",<br>
+                        &emsp;"emailAddress": "string",<br>
+                    }
+                    <br>
+                </td>
+            </tr>
+            <tr>
+                <td>[GET]</td>
+                <td>/Users/{userId}</td>
+                <td>If the user ID provided exists it should return that user object with a 200 
+                    response
+                    <br>
+                    {<br>
+                        &emsp;"userId": "string",<br>
+                        &emsp;"firstName": "string",<br>
+                        &emsp;"lastName": "string",<br>
+                        &emsp;"emailAddress": "string",<br>
+                    }
+                    <br><br>
+                    If the user ID provided is not found it should return a 404 (not Found) 
+                    error along with a message.
+                    {<br>
+                        &emsp;"message": "string",<br>
+                        &emsp;"status": "string"<br>
+                    }<br>
+                    </td>
+            </tr>
+            <tr>
+                <td>[PATCH]</td>
+                <td>/Users/{userId}</td>
+                <td>This method should expect a payload of a user record (incomplete or 
+                    complete) and should update the existing user with the provided values 
+                    if the user exists.
+                    <br>
+                    {<br>
+                        &emsp;"userId": "string",<br>
+                        &emsp;"firstName": "string",<br>
+                        &emsp;"lastName": "string",<br>
+                        &emsp;"emailAddress": "string",<br>
+                        &emsp;"password": "string"<br>
+                    }
+                    <br><br>
+                    If the user doesn't exist it should return 404 not found along with a 
+                    message. 
+                    {<br>
+                        &emsp;"message": "string",<br>
+                        &emsp;"status": "string"<br>
+                    }<br>
+                    <br>
+                    It should ignore any changes to the user ID but all other fields provided 
+                    should be updated and a status 200 should be returned along with the 
+                    updated user object.</td>
+            </tr>
+            <tr>
+                <td>[DELETE]</td>
+                <td>/Users/{userId}</td>
+                <td>This request should take the provided user id and remove it from the 
+                    user array (if found) and respond with status 204 Deleted. 
+                    
+                    If the user is not found it should respond with a 404 not found and 
+                    appropriate message.
+                    <br>
+                    {<br>
+                        &emsp;"message": "string",<br>
+                        &emsp;"status": "string"<br>
+                    }<br>
+                </td>
+            </tr>
+        </table>
+    </div>
+ 
+</body>
+</html>

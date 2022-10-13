@@ -1,6 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import { userRouter } from "./router/userRouter";
+import path from "path";
 
 const port = 3000;
 const app = express();
@@ -18,8 +19,7 @@ app.use('/Users', userRouter);
 app.get("/", (req: any,res: any, next) =>{
     console.log("Gettin' stuff")
     //res.render("index")
-    app.use(express.static(__dirname + '/public/styles.css'));
-    res.sendFile(__dirname + '/public/index.html');
+    res.sendFile(path.join(__dirname, "../src/public/index.html"));
   })
 
 app.all('*', (req, res) => {
